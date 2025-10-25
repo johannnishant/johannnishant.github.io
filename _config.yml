@@ -9,8 +9,7 @@ url: "https://johannnishant.github.io" # the base hostname & protocol for your s
 markdown: kramdown
 highlighter: rouge
 theme: minima
-plugins:
-  - jekyll-feed
+plugins: []
 
 # Custom CSS
 sass:

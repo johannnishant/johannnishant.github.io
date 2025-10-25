@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title | default: site.title }}</title>
     <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
-    <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
 </head>
 <body>
     <header>
         <nav>
             <a href="{{ '/' | relative_url }}">Home</a>
-            <a href="{{ '/about' | relative_url }}">About</a>
         </nav>
     </header>
     
@@ -20,7 +18,7 @@
     </main>
     
     <footer>
-        <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}. Built with Jekyll.</p>
+        <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}.</p>
     </footer>
 </body>
 </html>
