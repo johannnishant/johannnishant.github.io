@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Simple local development server for Jekyll sites
+Simple local development server for Jekyll sites with live reload
 Serves Markdown files directly without full Jekyll processing
 """
 
@@ -10,7 +10,24 @@ import socketserver
 from pathlib import Path
 import markdown
 import re
+import threading
+import time
 from urllib.parse import urlparse
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
+
+# Global variable to track file changes
+file_changed = False
+
+class FileChangeHandler(FileSystemEventHandler):
+    """Handle file system events for live reload"""
+    def on_modified(self, event):
+        global file_changed
+        if not event.is_directory:
+            # Only watch for markdown, css, js, and html files
+            if event.src_path.endswith(('.md', '.css', '.js', '.html')):
+                file_changed = True
+                print(f"📝 File changed: {event.src_path}")
 
 class JekyllDevHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
@@ -21,14 +38,31 @@ class JekyllDevHandler(http.server.SimpleHTTPRequestHandler):
         parsed_path = urlparse(self.path)
         path = parsed_path.path
         
+        # Handle live reload check endpoint
+        if path == '/live-reload-check':
+            self.handle_live_reload_check()
         # Serve index.md as index.html
-        if path == '/' or path == '/index.html':
+        elif path == '/' or path == '/index.html':
             self.serve_markdown_file('index.md')
         elif path == '/about' or path == '/about.html':
             self.serve_markdown_file('about.md')
         else:
             # Try to serve the file normally
             super().do_GET()
+    
+    def handle_live_reload_check(self):
+        """Handle live reload check requests"""
+        global file_changed
+        self.send_response(200)
+        self.send_header('Content-type', 'application/json')
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.end_headers()
+        
+        response = {'changed': file_changed}
+        if file_changed:
+            file_changed = False  # Reset the flag
+        
+        self.wfile.write(str(response).replace("'", '"').encode('utf-8'))
     
     def serve_markdown_file(self, filename):
         """Serve a Markdown file as HTML"""
@@ -106,9 +140,22 @@ class JekyllDevHandler(http.server.SimpleHTTPRequestHandler):
         nav a {{ margin-right: 20px; color: #3498db; text-decoration: none; }}
         nav a:hover {{ text-decoration: underline; }}
         footer {{ margin-top: 50px; padding-top: 20px; border-top: 1px solid #eee; color: #666; }}
+        .live-reload-indicator {{
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #28a745;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            z-index: 1000;
+        }}
     </style>
 </head>
 <body>
+    <div class="live-reload-indicator">🔄 Live Reload Active</div>
+    
     <header>
         <nav>
             <a href="/">Home</a>
@@ -123,24 +170,62 @@ class JekyllDevHandler(http.server.SimpleHTTPRequestHandler):
     <footer>
         <p>&copy; 2024 {title}. Local development server.</p>
     </footer>
+    
+    <script>
+        // Live reload functionality
+        let lastModified = null;
+        
+        function checkForChanges() {{
+            fetch('/live-reload-check', {{
+                method: 'GET',
+                cache: 'no-cache'
+            }})
+            .then(response => response.json())
+            .then(data => {{
+                if (data.changed) {{
+                    console.log('🔄 File changed, reloading page...');
+                    window.location.reload();
+                }}
+            }})
+            .catch(error => {{
+                console.log('Live reload check failed:', error);
+            }});
+        }}
+        
+        // Check for changes every 1 second
+        setInterval(checkForChanges, 1000);
+        
+        // Initial check
+        checkForChanges();
+    </script>
 </body>
 </html>"""
         return html
 
 def serve_site(port=8000):
-    """Serve the Jekyll site locally"""
-    print(f"🚀 Starting Jekyll development server...")
+    """Serve the Jekyll site locally with live reload"""
+    print(f"🚀 Starting Jekyll development server with live reload...")
     print(f"📁 Serving from: {os.getcwd()}")
     print(f"🌐 Server running at http://localhost:{port}")
     print("📝 Supported files: index.md, about.md")
+    print("🔄 Live reload: Active (watches .md, .css, .js, .html files)")
     print("🛑 Press Ctrl+C to stop")
     print("-" * 50)
     
-    with socketserver.TCPServer(("", port), JekyllDevHandler) as httpd:
-        try:
+    # Set up file watching
+    event_handler = FileChangeHandler()
+    observer = Observer()
+    observer.schedule(event_handler, path='.', recursive=True)
+    observer.start()
+    
+    try:
+        with socketserver.TCPServer(("", port), JekyllDevHandler) as httpd:
             httpd.serve_forever()
-        except KeyboardInterrupt:
-            print("\n🛑 Server stopped")
+    except KeyboardInterrupt:
+        print("\n🛑 Server stopped")
+        observer.stop()
+    finally:
+        observer.join()
 
 if __name__ == "__main__":
     serve_site()
