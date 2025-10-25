@@ -1,0 +1,66 @@
+<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="400" fill="#f8f9fa" stroke="#dee2e6" stroke-width="2"/>
+  
+  <!-- Tester Section -->
+  <g transform="translate(50, 50)">
+    <rect x="0" y="0" width="200" height="300" fill="none" stroke="#007bff" stroke-width="2" stroke-dasharray="5,5"/>
+    <text x="100" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#007bff">Tester</text>
+    
+    <!-- CURL Box -->
+    <rect x="20" y="50" width="160" height="60" fill="#e3f2fd" stroke="#1976d2" stroke-width="1"/>
+    <text x="100" y="80" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#1976d2">CURL</text>
+    
+    <!-- FETCH Box -->
+    <rect x="20" y="130" width="160" height="60" fill="#e3f2fd" stroke="#1976d2" stroke-width="1"/>
+    <text x="100" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#1976d2">FETCH</text>
+  </g>
+  
+  <!-- Cloudflare Section -->
+  <g transform="translate(300, 50)">
+    <rect x="0" y="0" width="200" height="300" fill="none" stroke="#ff6b35" stroke-width="2" stroke-dasharray="5,5"/>
+    <text x="100" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#ff6b35">Cloudflare</text>
+    
+    <!-- Cloudflare Worker Box -->
+    <rect x="20" y="50" width="160" height="100" fill="#fff3e0" stroke="#f57c00" stroke-width="1"/>
+    <text x="100" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#f57c00">Cloudflare Worker</text>
+  </g>
+  
+  <!-- Connection Box -->
+  <g transform="translate(550, 150)">
+    <rect x="0" y="0" width="80" height="100" fill="#f5f5f5" stroke="#666" stroke-width="1"/>
+  </g>
+  
+  <!-- AWS Section -->
+  <g transform="translate(650, 50)">
+    <rect x="0" y="0" width="200" height="300" fill="none" stroke="#ff9500" stroke-width="2" stroke-dasharray="5,5"/>
+    <text x="100" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#ff9500">aws eu-north-1</text>
+    
+    <!-- EC2 Box -->
+    <rect x="20" y="40" width="160" height="240" fill="none" stroke="#ff9500" stroke-width="2" stroke-dasharray="3,3"/>
+    <text x="100" y="60" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ff9500">EC2</text>
+    
+    <!-- NGINX Box -->
+    <rect x="30" y="80" width="140" height="60" fill="#e8f5e8" stroke="#4caf50" stroke-width="1"/>
+    <text x="100" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#4caf50">NGINX</text>
+    
+    <!-- Interview Webserver Box -->
+    <rect x="30" y="160" width="140" height="60" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1"/>
+    <text x="100" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#9c27b0">Interview Webserver</text>
+  </g>
+  
+  <!-- Arrows showing flow -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+  </defs>
+  
+  <!-- Flow arrows -->
+  <line x1="250" y1="200" x2="300" y2="200" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="500" y1="200" x2="550" y2="200" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="630" y1="200" x2="650" y2="200" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Title -->
+  <text x="400" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#333">System Architecture Flow</text>
+</svg>

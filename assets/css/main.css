@@ -80,3 +80,31 @@ a:hover {
   border-left: 3px solid #3498db;
   background-color: #f8f9fa;
 }
+
+/* Image styling */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin: 20px 0;
+}
+
+/* SVG images */
+svg {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+/* Image captions */
+img + em {
+  display: block;
+  text-align: center;
+  font-style: italic;
+  color: #6c757d;
+  margin-top: -10px;
+  margin-bottom: 20px;
+}

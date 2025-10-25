@@ -7,6 +7,30 @@ title: Home
 
 This is a simple GitHub Pages site built with Jekyll. Here you can find information about web development and deployment.
 
+## System Architecture Example
+
+Here's an example of a modern web application architecture:
+
+![System Architecture Flow]({{ '/assets/images/system-architecture.svg' | relative_url }})
+
+*This diagram shows the flow from client requests through Cloudflare Workers to AWS infrastructure.*
+
+## Adding Images to Your Jekyll Site
+
+To add images to your Jekyll site, follow these steps:
+
+1. **Place images in the `assets/images/` directory**
+2. **Use Jekyll's `relative_url` filter for proper linking**:
+   ```markdown
+   ![Alt text]({{ '/assets/images/your-image.jpg' | relative_url }})
+   ```
+3. **Supported formats**: JPG, PNG, GIF, SVG, WebP
+4. **Best practices**:
+   - Use descriptive alt text for accessibility
+   - Optimize images for web (compress before uploading)
+   - Use SVG for diagrams and simple graphics
+   - Consider responsive images for mobile devices
+
 ## Simple Web Server Deployment Guide
 
 Here's a basic guide for deploying a simple web server:
