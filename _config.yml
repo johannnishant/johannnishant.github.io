@@ -1,0 +1,29 @@
+# Site settings
+title: "Johann Nishant's Blog"
+email: "johannnishant@example.com"
+description: "Personal blog and portfolio of Johann Nishant"
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://johannnishant.github.io" # the base hostname & protocol for your site
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+plugins:
+  - jekyll-feed
+
+# Custom CSS
+sass:
+  sass_dir: assets/css
+  style: compressed
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - README.md
