@@ -1,12 +1,18 @@
 source "https://rubygems.org"
 
-# Use GitHub Pages gem which handles all dependencies
-gem "github-pages", "~> 228", group: :jekyll_plugins
+# Use Jekyll without the problematic eventmachine dependency
+gem "jekyll", "~> 4.3.0"
 
-# If you have any plugins, put them here!
+# Minimal theme to avoid complex dependencies
+gem "minima", "~> 2.5"
+
+# Simple plugins only
 group :jekyll_plugins do
   gem "jekyll-feed", "~> 0.12"
 end
+
+# For GitHub Pages deployment, uncomment the line below and comment out the jekyll gem above
+# gem "github-pages", "~> 228", group: :jekyll_plugins
 
 # Windows and JRuby does not include zoneinfo files, so bundle the tzinfo-data gem
 # and associated library.
