@@ -1,4 +1,3 @@
-# Cloudflare Technical Project - Johann Nishant
 
 Really fun to work with this, it gave me a good intro into Cloudflare's Services!
 
